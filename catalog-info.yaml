@@ -1,0 +1,213 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: python-sample-app
+  description: A comprehensive Python service with all possible Backstage relations
+  title: Python Sample Application
+  tags:
+    - python
+    - microservice
+    - api
+    - backend
+    - web-service
+    - example
+  labels:
+    environment: production
+    team: platform
+    tier: backend
+    language: python
+  annotations:
+    # Source control and documentation
+    backstage.io/managed-by-location: url:https://github.com/your-org/python-sample-app/blob/main/catalog-info.yaml
+    github.com/project-slug: your-org/python-sample-app
+    backstage.io/source-location: url:https://github.com/your-org/python-sample-app/tree/main/
+    backstage.io/techdocs-ref: dir:.
+    
+    # CI/CD and deployment
+    github.com/workflows: build.yml,deploy.yml
+    backstage.io/kubernetes-id: python-sample-app
+    backstage.io/kubernetes-namespace: production
+    argocd/app-name: python-sample-app
+    jenkins.io/job-full-name: folder/python-sample-app
+    
+    # Monitoring and observability
+    grafana/dashboard-selector: python-sample-app
+    prometheus.io/rule: python-sample-app
+    datadog/dashboard-url: https://app.datadoghq.com/dashboard/python-sample
+    newrelic.com/dashboard-guid: python-sample-dashboard
+    sentry.io/project-slug: python-sample-app
+    
+    # Security and compliance
+    sonarqube.org/project-key: python-sample-app
+    snyk.io/org-id: your-org
+    
+    # Communication and documentation
+    slack.com/channel: "#python-team"
+    confluence.com/project-key: PYTHON
+    jira/project-key: PYTHON
+    pagerduty.com/integration-key: python-sample-service
+    
+    # Development tools
+    backstage.io/code-coverage: enabled
+    circleci.com/project-slug: github/your-org/python-sample-app
+    
+  links:
+    - url: https://python-sample-app.example.com
+      title: Production Service
+      icon: web
+    - url: https://staging-python-sample-app.example.com
+      title: Staging Environment
+      icon: web
+    - url: https://github.com/your-org/python-sample-app
+      title: Source Code
+      icon: github
+    - url: https://python-sample-app.docs.example.com
+      title: API Documentation
+      icon: docs
+    - url: https://grafana.example.com/d/python-sample-app
+      title: Monitoring Dashboard
+      icon: dashboard
+    - url: https://wiki.example.com/python-sample-app
+      title: Project Wiki
+      icon: help
+
+spec:
+  type: service
+  lifecycle: production
+  
+  # Owner can be user, group, or team
+  owner: group:default/team-alpha
+  
+  # System this component belongs to
+  system: sample-system
+  
+  # Subcomponent relationships (this component is composed of these)
+  subcomponentOf: parent-service
+  
+  # APIs that this component provides to others
+  providesApis:
+    - python-sample-api
+    - health-check-api
+    - metrics-api
+  
+  # APIs that this component consumes from others
+  consumesApis:
+    - user-service-api
+    - payment-service-api
+    - notification-service-api
+    - external-weather-api
+  
+  # Other components this service depends on
+  dependsOn:
+    - component:default/database-service
+    - component:default/redis-cache
+    - component:default/message-queue
+    - resource:default/postgresql-db
+    - resource:default/s3-bucket
+  
+  # Components that depend on this service
+  dependencyOf:
+    - component:default/frontend-app
+    - component:default/mobile-app
+    - component:default/reporting-service
+
+---
+# API definition for the main service API
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: python-sample-api
+  description: Main REST API for the Python sample application
+  tags:
+    - rest
+    - json
+    - openapi
+  annotations:
+    backstage.io/definition: |
+      openapi: 3.0.0
+      info:
+        title: Python Sample API
+        version: 1.0.0
+        description: A sample REST API
+      paths:
+        /api/v1/health:
+          get:
+            summary: Health check endpoint
+            responses:
+              '200':
+                description: Service is healthy
+        /api/v1/users:
+          get:
+            summary: Get users
+            responses:
+              '200':
+                description: List of users
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:default/team-alpha
+  system: sample-system
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Python Sample API
+      version: 1.0.0
+
+---
+# System definition
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: sample-system
+  description: Sample microservices system
+  tags:
+    - microservices
+    - python
+    - backend
+spec:
+  owner: group:default/team-alpha
+  domain: sample-domain
+
+---
+# Domain definition
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: sample-domain
+  description: Sample business domain
+spec:
+  owner: group:default/team-alpha
+
+---
+# Resource definitions
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: postgresql-db
+  description: PostgreSQL database for Python sample app
+  tags:
+    - database
+    - postgresql
+spec:
+  type: database
+  owner: group:default/platform-team
+  system: sample-system
+  dependencyOf:
+    - component:default/python-sample-app
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: s3-bucket
+  description: S3 bucket for file storage
+  tags:
+    - storage
+    - aws
+    - s3
+spec:
+  type: storage
+  owner: group:default/platform-team
+  system: sample-system
+  dependencyOf:
+    - component:default/python-sample-app
