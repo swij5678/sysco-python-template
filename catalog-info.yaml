@@ -44,7 +44,7 @@ metadata:
     # Communication and documentation
     slack.com/channel: "#python-team"
     confluence.com/project-key: PYTHON
-    jira/project-key: PYTHON
+    jira/project-key: DE
     pagerduty.com/integration-key: python-sample-service
     
     # Development tools
