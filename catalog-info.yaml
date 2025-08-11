@@ -18,9 +18,9 @@ metadata:
     language: python
   annotations:
     # Source control and documentation
-    backstage.io/managed-by-location: url:https://github.com/your-org/python-sample-app/blob/main/catalog-info.yaml
+    backstage.io/managed-by-location: url:https://github.com/your-org/python-sample-app/blob/master/catalog-info.yaml
     github.com/project-slug: your-org/python-sample-app
-    backstage.io/source-location: url:https://github.com/your-org/python-sample-app/tree/main/
+    backstage.io/source-location: url:https://github.com/your-org/python-sample-app/tree/master/
     backstage.io/techdocs-ref: dir:.
     
     # CI/CD and deployment
